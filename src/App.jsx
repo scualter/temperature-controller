@@ -11,22 +11,28 @@ const  App = () =>  {
   
   const addHistorial = (newTemperatura) => {
     const hora = new Date().toLocaleTimeString()
-    setHistory ([...history, `Hora: ${hora} --> ${newTemperatura} ºC`])
+    setTimeout(() => {
+      setHistory ([...history, `Hora: ${hora} --> ${newTemperatura} ºC`])
+    }, 1000)
   }
 
 
   //Funcion subir temperatura
   const incrementar = () => {
+    if (temperature <40) {
     const newTemperatura = temperature + 1
     setTemperature(newTemperatura)
     addHistorial(newTemperatura)
+    }
   }
 
   //Funcion bajar temperatura
   const decrementar = () => {
+    if (temperature >0) {
     const newTemperatura = temperature - 1
     setTemperature(newTemperatura)
     addHistorial(newTemperatura)
+    }
   }
 
   //Funcion reset

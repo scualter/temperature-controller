@@ -6,15 +6,20 @@ import HistoryList from './components/HistoryList'
 
 const  App = () =>  {
   const [temperature, setTemperature] = useState(20)
-  const [history, setHistory] = useState([])
+  const [history, setHistory] = useState(() => {
+  const saved = localStorage.getItem('historial')
+  return saved ? JSON.parse(saved) : []
+})
 
   
   const addHistorial = (newTemperatura) => {
-    const hora = new Date().toLocaleTimeString()
-    setTimeout(() => {
-      setHistory ([...history, `Hora: ${hora} --> ${newTemperatura} ºC`])
-    }, 1000)
-  }
+  const hora = new Date().toLocaleTimeString()
+  setTimeout(() => {
+    const newHistory = [...history, `${hora} --> ${newTemperatura}`]
+    setHistory(newHistory)
+    localStorage.setItem('historial', JSON.stringify(newHistory))
+  }, 1000)
+}
 
 
   //Funcion subir temperatura
@@ -39,6 +44,7 @@ const  App = () =>  {
   const reset = () => {
     setTemperature(20);
     setHistory([])
+    localStorage.removeItem('historial')
   }
 
   return (
